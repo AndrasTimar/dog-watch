@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="App">
       <header>
-	    <img className="main-image" src="/smaller.jpg"/>
+	    <img className="main-image" src="http://raspberrypi.local:8080/latest"/>
       <button  type="button" value="Click Me" onClick={handleClick} >Refresh</button>
       </header>
     </div>
