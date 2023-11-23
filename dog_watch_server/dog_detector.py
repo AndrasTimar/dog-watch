@@ -1,11 +1,10 @@
 import os
 from gpiozero import MotionSensor
 import time
-from datetime import datetime
 
 def takePhoto(path):
     print("Taking photo")
-    os.system("libcamera-still -o "+path+"smaller.jpg --hflip --vflip")
+    os.system("libcamera-still -o "+path+"capture"+ str(time.time())+".jpg --hflip --vflip")
 
 def startWatching(path):
 	print("Starting up")
