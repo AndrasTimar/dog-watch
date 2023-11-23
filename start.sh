@@ -1,6 +1,4 @@
 #!/bin/sh
-python3 ./motion_photo/dog_detector.py &
-python3 ./motion_photo_trigger/main.py &
-cd ./photo_server
-npm start &
+python3 ./dog_watch_server/server.py &
+npm start --prefix ./photo_server &
 
