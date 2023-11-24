@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,python
 
 #images
-./dog_watch/images/
+./dog_watch_server/images/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
