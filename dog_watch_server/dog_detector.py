@@ -4,7 +4,7 @@ import time
 
 def takePhoto(path):
     print("Taking photo")
-    os.system("libcamera-still -o "+path+"capture"+ str(time.time())+".jpg --hflip --vflip")
+    os.system("libcamera-still -o "+path+"capture"+ str(time.time())+".jpg")
 
 def startWatching(path):
 	print("Starting up")
@@ -14,8 +14,10 @@ def startWatching(path):
 		print("Waiting for motion")
 		sensor.wait_for_motion()
 		print("Object Detected")
-		sensor.wait_for_no_motion()
+		time.sleep(0.5)
 		takePhoto(path)
+		sensor.wait_for_no_motion()
+		print("No motion detected")
 		time.sleep(5)
 		
 
