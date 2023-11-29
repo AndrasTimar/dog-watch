@@ -1,10 +1,7 @@
-import os
+import sys,os
 from gpiozero import MotionSensor
 import time
-
-def takePhoto(path):
-    print("Taking photo")
-    os.system("libcamera-still -o "+path+"capture"+ str(time.time())+".jpg --immediate")
+from request_photo import send_photo_request
 
 def startWatching(path):
 	print("Starting up")
@@ -13,10 +10,17 @@ def startWatching(path):
 	while True:
 		print("Waiting for motion")
 		sensor.wait_for_motion()
-		print("Object Detected")
-		takePhoto(path)
+		send_photo_request()
 		sensor.wait_for_no_motion()
-		print("No motion detected")
 		time.sleep(5)
-		
+
+if __name__ == '__main__':
+    try:
+        startWatching("./images/")
+    except KeyboardInterrupt:
+        print('Interrupted')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)		
 
