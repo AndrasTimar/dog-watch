@@ -1,3 +1,3 @@
-from rabbitmq_sender import sendToTopic
+from rabbitmq_sender import send_to_topic
 def send_photo_request():
-	sendToTopic("movement.photo_requested", "movement", "movement_detected")
+	send_to_topic("movement.photo_requested", "movement", "movement_detected")

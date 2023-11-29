@@ -3,7 +3,7 @@ import pika
 #movement.started
 #movement
 #any message
-def sendToTopic(topic, exchange, message):
+def send_to_topic(topic, exchange, message):
 	connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 	channel = connection.channel()
 	channel.exchange_declare(exchange=exchange, exchange_type='topic')

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import pika, sys, os
 import time
-def takePhoto(path):
+def take_photo(path):
     print("Taking photo")
     os.system("libcamera-still -o "+path+"capture"+ str(time.time())+".jpg --immediate")
 
@@ -17,7 +17,7 @@ def main():
     channel.queue_bind(exchange='movement',queue=queue_name, routing_key="movement.photo_requested")
 
     def callback(ch, method, properties, body):
-        takePhoto("./images/")
+        take_photo("./images/")
 
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
 

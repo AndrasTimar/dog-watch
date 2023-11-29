@@ -3,7 +3,7 @@ from gpiozero import MotionSensor
 import time
 from request_photo import send_photo_request
 
-def startWatching(path):
+def start_watching(path):
 	print("Starting up")
 	sensor = MotionSensor(4)
 	print("IR Sensor Ready.....")
@@ -16,7 +16,7 @@ def startWatching(path):
 
 if __name__ == '__main__':
     try:
-        startWatching("./images/")
+        start_watching("./images/")
     except KeyboardInterrupt:
         print('Interrupted')
         try:
