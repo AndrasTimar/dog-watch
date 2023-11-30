@@ -19,7 +19,7 @@ def hello_world():
     filesDict = {'images': ['image1.jpg', 'image2.jpg']}
     return jsonify(list_of_files)
 @app.route('/request_photo', methods=['POST'])
-def requestPhoto():
+def request_photo():
     send_photo_request()
     return "OK"
 # main driver function
