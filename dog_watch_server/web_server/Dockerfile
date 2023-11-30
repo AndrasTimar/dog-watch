@@ -18,4 +18,4 @@ COPY ./rabbitmq_sender.py /app
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]
 
-CMD ["server.py", "./static/images/" ]
+CMD ["server.py", "./static/" ]
