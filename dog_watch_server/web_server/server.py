@@ -13,12 +13,15 @@ path = sys.argv[1]
 
 print("Starting with path: ", path)
  
-@app.route('/')
+@app.route('/', methods=['GET'])
 def hello_world():
     list_of_files=glob.glob(path + '/*')
     filesDict = {'images': ['image1.jpg', 'image2.jpg']}
     return jsonify(list_of_files)
- 
+@app.route('/request_photo', methods=['POST'])
+def requestPhoto():
+    send_photo_request()
+    return "OK"
 # main driver function
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
