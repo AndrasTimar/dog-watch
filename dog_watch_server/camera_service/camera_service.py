@@ -20,7 +20,6 @@ def main():
 
     def callback(ch, method, properties, body):
         take_photo()
-
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
 
     print(' [*] Waiting for messages. To exit press CTRL+C', flush=True)
