@@ -11,7 +11,9 @@ services:
       - dog_watch_network
 
   web_server:
-    build: ./web_server
+    build: 
+      context: ./web_server
+      dockerfile: Dockerfile
     image: server
     networks:
      - dog_watch_network
@@ -24,10 +26,12 @@ services:
      - rabbitmq
 
   camera_service:
-    build: ./camera_service
+    build:
+      context: ./camera_service
+      dockerfile: Dockerfile
     image: camera_service
-    env_file: 
-     - ./camera_service/.env
+   # env_file: 
+   #  - ./camera_service/.env
     volumes:
      - "/opt/vc:/opt/vc"
     devices:
