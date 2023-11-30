@@ -13,7 +13,7 @@ RUN ls -l
 
 # copy every content from the local file to the image
 COPY ./web_server/server.py /app
-COPY ./web_server/request_photo.py /app
+COPY ./request_photo.py /app
 COPY ./rabbitmq_sender.py /app
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]

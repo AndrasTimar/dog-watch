@@ -1,5 +1,18 @@
 version: '3.7'
 services:
+  dog_detector:
+    image: dog_detector
+    build:
+      context: ./dog_detector
+      dockerfile: Dockerfile
+    networks:
+     - dog_watch_network
+    restart: always
+    devices:
+     - "/dev/gpiomem:/dev/gpiomem"
+    depends_on:
+     - rabbitmq
+
   rabbitmq:
     image: rabbitmq:management
     command: rabbitmq-server
