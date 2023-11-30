@@ -10,9 +10,8 @@ def take_photo():
 
 
 def main():
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq')) #TODO env var
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq',heartbeat=36000)) #TODO env var
     channel = connection.channel()
-
     channel.exchange_declare(exchange='movement',exchange_type='topic')
 
     result = channel.queue_declare(queue='', exclusive=True)

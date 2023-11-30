@@ -16,7 +16,7 @@ services:
     networks:
      - dog_watch_network
     volumes:
-     - /tmp/dog_watch/images/:/app/static
+     - "/tmp/dog_watch/images/:/app/static"
     restart: always
     ports:
      - 5000:5000
@@ -26,6 +26,13 @@ services:
   camera_service:
     build: ./camera_service
     image: camera_service
+    env_file: 
+     - ./camera_service/.env
+    volumes:
+     - "/opt/vc:/opt/vc"
+    devices:
+     - "/dev/vchiq:/dev/vchiq"
+     - "/dev/video0:/dev/video0"
     networks:
      - dog_watch_network
     restart: always
