@@ -17,10 +17,10 @@ services:
     networks:
      - dog_watch_network
     restart: always
+    env_file:
+      - ./message_coordinator/.env
     depends_on:
      - rabbitmq
-    environment:
-      - "RABBIT_MQ_HOST=rabbitmq"
 
   dog_detector:
     image: dog_detector
@@ -32,9 +32,8 @@ services:
     restart: always
     devices:
      - "/dev/gpiomem:/dev/gpiomem"
-    environment:
-      - "MOTION_DETECTOR_CONTROL_PIN=17"
-      - "RABBIT_MQ_HOST=rabbitmq"
+    env_file:
+      - ./dog_detector/.env
     depends_on:
      - message_coordinator
 
@@ -48,8 +47,8 @@ services:
     volumes:
      - "/tmp/dog_watch/images/:/app/static"
     restart: always
-    environment:
-      - "RABBIT_MQ_HOST=rabbitmq"
+    env_file:
+      - ./web_server/.env
     ports:
      - 5000:5000
     depends_on:
@@ -63,9 +62,8 @@ services:
     privileged: true
     group_add:
      - video
-    environment:
-     - "LD_LIBRARY_PATH: /opt/vc/lib"
-     - "RABBIT_MQ_HOST=rabbitmq"
+    env_file:
+      - ./camera_service/.env
     volumes:
      - /opt/vc:/opt/vc
      - /run/udev:/run/udev:ro

@@ -14,7 +14,6 @@ RUN apt-get install python3-pip
 RUN apt-get install libcamera-apps-lite
 
 COPY ./camera_service/requirements.txt /app/requirements.txt
-COPY ./rabbitmq_listener.py /app/rabbitmq_listener.py
 
 #RUN groupadd -r -g 888 app && \
 #    useradd -r -u 888 -g app -d /app app && \
@@ -22,8 +21,10 @@ COPY ./rabbitmq_listener.py /app/rabbitmq_listener.py
 #    usermod -a -G video app
 #USER app
 
-# switch working directory
+ADD ./common/ /common/
+
 WORKDIR /app
+
 # install the dependencies and packages in the requirements file
 RUN pip3 install -r requirements.txt
 
@@ -33,3 +34,4 @@ COPY ./camera_service/camera_service.py /app
 ENTRYPOINT [ "python3" ]
 
 CMD ["camera_service.py", "/images/"]
+

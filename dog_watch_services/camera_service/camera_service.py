@@ -1,7 +1,10 @@
 #!/usr/bin/env python
-from rabbitmq_listener import listen_blocking
 import sys, os
 import time
+
+sys.path.append("..")
+ 
+from common import listen_blocking
 
 path = sys.argv[1]
 

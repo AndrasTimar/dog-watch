@@ -1,10 +1,12 @@
-import sys, os
+import sys, os, time
 from gpiozero import MotionSensor
-import time
-from rabbitmq_sender import send_to_topic
+
+sys.path.append("..")
+ 
+from common import send_to_topic
 
 def notifiy_movemenet_detected():
-	send_to_topic(topic="movement_detected", exchange="dog_watch", message="movement_detected")
+	send_to_topic(topic="motion_detected", exchange="event", message="motion_detected")
 
 def start_watching():
 	print("Starting up")
