@@ -3,13 +3,15 @@ services:
   dog_detector:
     image: dog_detector
     build:
-      context: ./dog_detector
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: Dockerfile_dog_detector
     networks:
      - dog_watch_network
     restart: always
     devices:
      - "/dev/gpiomem:/dev/gpiomem"
+    environment:
+      - "MOTION_DETECTOR_CONTROL_PIN=17"
     depends_on:
      - rabbitmq
 
@@ -19,14 +21,13 @@ services:
     restart: always
     ports:
      - 15672:15672
-     - 5672:5672 #remove this
     networks:
       - dog_watch_network
 
   web_server:
     build:
-      context: ./web_server
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: Dockerfile_web_server
     image: server
     networks:
      - dog_watch_network
@@ -40,8 +41,8 @@ services:
 
   camera_service:
     build:
-      context: ./camera_service
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: Dockerfile_camera_service
     image: camera_service
     privileged: true
     group_add:
