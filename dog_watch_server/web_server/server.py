@@ -3,10 +3,13 @@ import time
 import sys
 import glob
 import os
-from request_photo import send_photo_request
 from flask import jsonify
 from flask import Flask
- 
+from rabbitmq_sender import send_to_topic
+
+def send_photo_request():
+	send_to_topic(topic="photo_requested", exchange="event", message="photo_requested")
+
 app = Flask(__name__)
 
 path = sys.argv[1]

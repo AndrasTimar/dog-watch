@@ -1,7 +1,10 @@
-import sys,os
+import sys, os
 from gpiozero import MotionSensor
 import time
-from request_photo import send_photo_request
+from rabbitmq_sender import send_to_topic
+
+def notifiy_movemenet_detected():
+	send_to_topic(topic="movement_detected", exchange="dog_watch", message="movement_detected")
 
 def start_watching():
 	print("Starting up")
@@ -10,7 +13,7 @@ def start_watching():
 	while True:
 		print("Waiting for motion")
 		sensor.wait_for_motion()
-		send_photo_request()
+		notifiy_movemenet_detected()
 		sensor.wait_for_no_motion()
 		time.sleep(5)
 

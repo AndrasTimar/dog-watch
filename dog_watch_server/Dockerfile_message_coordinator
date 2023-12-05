@@ -8,7 +8,7 @@ RUN apt-get update && apt-get upgrade
 RUN apt-get install -y python3
 RUN apt-get install python3-pip
 
-COPY ./dog_detector/requirements.txt /app/requirements.txt
+COPY ./message_coordinator/requirements.txt /app/requirements.txt
 
 # switch working directory
 WORKDIR /app
@@ -16,9 +16,10 @@ WORKDIR /app
 RUN pip3 install -r requirements.txt
 
 # copy every content from the local file to the image
-COPY ./dog_detector/dog_detector.py /app
+COPY ./message_coordinator/message_coordinator.py /app
 COPY ./rabbitmq_sender.py /app
+COPY ./rabbitmq_listener.py /app
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python3" ]
 
-CMD ["dog_detector.py"]
+CMD ["message_coordinator.py"]

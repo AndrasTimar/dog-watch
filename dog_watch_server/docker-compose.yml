@@ -1,5 +1,27 @@
 version: '3.7'
 services:
+  rabbitmq:
+    image: rabbitmq:management
+    command: rabbitmq-server
+    restart: always
+    ports:
+     - 15672:15672
+    networks:
+      - dog_watch_network
+
+  message_coordinator:
+    image: message_coordinator
+    build:
+      context: ./
+      dockerfile: Dockerfile_message_coordinator
+    networks:
+     - dog_watch_network
+    restart: always
+    depends_on:
+     - rabbitmq
+    environment:
+      - "RABBIT_MQ_HOST=rabbitmq"
+
   dog_detector:
     image: dog_detector
     build:
@@ -12,17 +34,9 @@ services:
      - "/dev/gpiomem:/dev/gpiomem"
     environment:
       - "MOTION_DETECTOR_CONTROL_PIN=17"
+      - "RABBIT_MQ_HOST=rabbitmq"
     depends_on:
-     - rabbitmq
-
-  rabbitmq:
-    image: rabbitmq:management
-    command: rabbitmq-server
-    restart: always
-    ports:
-     - 15672:15672
-    networks:
-      - dog_watch_network
+     - message_coordinator
 
   web_server:
     build:
@@ -34,10 +48,12 @@ services:
     volumes:
      - "/tmp/dog_watch/images/:/app/static"
     restart: always
+    environment:
+      - "RABBIT_MQ_HOST=rabbitmq"
     ports:
      - 5000:5000
     depends_on:
-     - rabbitmq
+     - message_coordinator
 
   camera_service:
     build:
@@ -49,6 +65,7 @@ services:
      - video
     environment:
      - "LD_LIBRARY_PATH: /opt/vc/lib"
+     - "RABBIT_MQ_HOST=rabbitmq"
     volumes:
      - /opt/vc:/opt/vc
      - /run/udev:/run/udev:ro
@@ -59,7 +76,7 @@ services:
      - dog_watch_network
     restart: always
     depends_on:
-     - rabbitmq
+     - message_coordinator
 networks:
   dog_watch_network:
 
