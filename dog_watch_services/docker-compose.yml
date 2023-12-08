@@ -63,7 +63,7 @@ services:
     group_add:
      - video
     env_file:
-      - ./camera_service/.env
+     - ./camera_service/.env
     volumes:
      - /opt/vc:/opt/vc
      - /run/udev:/run/udev:ro
@@ -75,6 +75,19 @@ services:
     restart: always
     depends_on:
      - message_coordinator
+
+  react_client:
+    build:
+      context: ./
+      dockerfile: Dockerfile_react_client
+    image: react_client
+    restart: always
+    ports:
+     - 80:3000
+    depends_on:
+     - web_server
+      
+
 networks:
   dog_watch_network:
 

@@ -5,6 +5,7 @@ import glob
 import os
 from flask import jsonify
 from flask import Flask
+from flask import send_from_directory
 
 sys.path.append("..")
  
@@ -20,6 +21,10 @@ path = sys.argv[1]
 
 print("Starting with path: ", path)
  
+@app.route('/latest', methods=['GET'])
+def latestPhoto():
+    latest_file = max(glob.glob(path + '*'), key=os.path.getctime)
+    return send_from_directory(latest_file, "./static/")
 @app.route('/', methods=['GET'])
 def hello_world():
     list_of_files=sorted(glob.glob(path+"*"), key=os.path.getmtime)
