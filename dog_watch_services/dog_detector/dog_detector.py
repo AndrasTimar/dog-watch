@@ -1,7 +1,7 @@
 import sys, os, time
 from gpiozero import MotionSensor
 
-from shared import rabbitmq_sender
+from common import rabbitmq_sender
 
 
 def notify_movement_detected():

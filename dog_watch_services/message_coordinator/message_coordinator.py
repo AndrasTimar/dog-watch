@@ -1,7 +1,7 @@
 import sys
  
-from shared import rabbitmq_sender
-from shared import rabbitmq_listener
+from common import rabbitmq_sender
+from common import rabbitmq_listener
 
 def handle_motion_detection(body):
     rabbitmq_sender.send_to_topic(exchange="command", topic="take_photo", message="take_photo")

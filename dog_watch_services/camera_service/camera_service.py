@@ -2,9 +2,7 @@
 import sys, os
 import time
 
-sys.path.append("..")
- 
-from common import listen_blocking
+from common import rabbitmq_listener
 
 path = sys.argv[1]
 
@@ -17,7 +15,7 @@ def take_photo():
 def main():
     def callback(ch, method, properties, body):
         take_photo()
-    listen_blocking(exchange_name="command", routing_key="take_photo", callback=callback) #TODO maybe move keys to env files
+    rabbitmq_listener.listen_blocking(exchange_name="command", routing_key="take_photo", callback=callback) #TODO maybe move keys to env files
 
 
 if __name__ == '__main__':

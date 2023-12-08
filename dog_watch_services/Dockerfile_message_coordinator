@@ -1,9 +1,9 @@
 FROM python:3.12.0-alpine
 # Set in container
 ENV TZ=Europe/Budapest
+ENV PYTHONPATH "${PYTHONPATH}:/"
 
 COPY ./message_coordinator/requirements.txt /app/requirements.txt
-
 
 WORKDIR /app
 # install the dependencies and packages in the requirements file
@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 
 # copy every content from the local file to the image
 COPY ./message_coordinator/message_coordinator.py /app
-ADD ./shared/ /shared/
+ADD ./common/ /common/
 
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]
