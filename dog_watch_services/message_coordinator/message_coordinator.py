@@ -1,15 +1,13 @@
 import sys
-
-sys.path.append("..")
  
-from common import send_to_topic
-from common import listen_blocking
+from shared import rabbitmq_sender
+from shared import rabbitmq_listener
 
 def handle_motion_detection(body):
-    send_to_topic(exchange="command", topic="take_photo", message="take_photo")
+    rabbitmq_sender.send_to_topic(exchange="command", topic="take_photo", message="take_photo")
 
 def handle_photo_requested(body):
-    send_to_topic(exchange="command", topic="take_photo", message="take_photo")
+    rabbitmq_sender.send_to_topic(exchange="command", topic="take_photo", message="take_photo")
 
 def handle_event(ch, method, properties, body):
     print("Received event: " + str(body), flush = True)
@@ -25,7 +23,7 @@ def start():
     def callback(ch, method, properties, body):
         handle_event(ch, method, properties, body)
     print("Message coordinator listening...", flush = True)
-    listen_blocking(exchange_name="event", routing_key="*", callback=callback) #TODO maybe move keys to env files
+    rabbitmq_listener.listen_blocking(exchange_name="event", routing_key="*", callback=callback) #TODO maybe move keys to env files
 
 
 if __name__ == '__main__':

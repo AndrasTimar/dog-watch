@@ -21,7 +21,7 @@ COPY ./camera_service/requirements.txt /app/requirements.txt
 #    usermod -a -G video app
 #USER app
 
-ADD ./common/ /common/
+ADD ./shared/ /shared/
 
 WORKDIR /app
 

@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 
 # copy every content from the local file to the image
 COPY ./message_coordinator/message_coordinator.py /app
-ADD ./common/ /common/
+ADD ./shared/ /shared/
 
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]
