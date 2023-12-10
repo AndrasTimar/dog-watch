@@ -17,7 +17,7 @@ def start_watching():
         sensor.wait_for_motion()
         notify_movement_detected()
         sensor.wait_for_no_motion()
-        time.sleep(5)
+        time.sleep(30)
 
 
 if __name__ == '__main__':
